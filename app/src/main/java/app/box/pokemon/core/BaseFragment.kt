@@ -9,4 +9,5 @@ open class BaseFragment(
     @LayoutRes layoutId: Int
 ) : Fragment(layoutId) {
     protected val navigation: NavController by lazy { findNavController() }
+    protected val parentActivity: MainActivity by lazy { requireActivity() as MainActivity }
 }

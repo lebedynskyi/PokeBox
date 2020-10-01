@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
 
 def android_navigation_version = "2.3.0"
@@ -35,9 +36,16 @@ android {
         sourceCompatibility 1.8
         targetCompatibility 1.8
     }
+
+    dataBinding {
+        enabled = true
+    }
 }
 
 dependencies {
+    // Code generation of Data binding
+    kapt 'com.android.databinding:compiler:3.1.4'
+
     // Local libraries dependencies
     implementation fileTree(dir: "libs", include: ["*.jar"])
 
@@ -50,6 +58,8 @@ dependencies {
 
     // Android Constraint Layout
     implementation 'androidx.constraintlayout:constraintlayout:2.0.1'
+    // Android material views
+    implementation 'com.google.android.material:material:1.2.1'
 
     // Koin for Android
     implementation "org.koin:koin-android:2.1.6"
