@@ -21,9 +21,19 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField("String", "POKEMON_API_URL", "\"https://pokeapi.co/api/v2/\"")
         }
+        debug {
+            minifyEnabled false
+            buildConfigField("String", "POKEMON_API_URL", "\"https://pokeapi.co/api/v2/\"")
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility 1.8
+        targetCompatibility 1.8
     }
 }
 
@@ -46,6 +56,11 @@ dependencies {
     implementation "org.koin:koin-android-scope:$koin_version"
     implementation "org.koin:koin-android-viewmodel:$koin_version"
     implementation "org.koin:koin-android-ext:$koin_version"
+
+    // Retrofit Api client
+    implementation "com.squareup.retrofit2:retrofit:2.9.0"
+    implementation "com.squareup.retrofit2:converter-gson:2.9.0"
+
 
     // Android navigation
     implementation "androidx.navigation:navigation-fragment-ktx:$android_navigation_version"

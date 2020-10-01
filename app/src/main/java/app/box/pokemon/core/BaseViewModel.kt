@@ -12,4 +12,11 @@ open class BaseViewModel(
     val progressLiveData: LiveData<Boolean>
         get() = _progressLiveData
 
+    protected fun showProgress() {
+        _progressLiveData.postValue(true)
+    }
+
+    protected fun hideProgress() {
+        _progressLiveData.postValue(false)
+    }
 }

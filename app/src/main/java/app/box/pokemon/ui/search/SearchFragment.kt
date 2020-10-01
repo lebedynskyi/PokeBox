@@ -7,9 +7,9 @@ import app.box.pokemon.core.BaseFragment
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class SearchFragment : BaseFragment(R.layout.fragment_search) {
-    val myViewModel: SearchViewModel by viewModel()
+    val searchViewModel: SearchViewModel by viewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        myViewModel.loadFavoritesPokemons()
+        searchViewModel.loadFavoritesPokemons()
     }
 }

@@ -5,4 +5,8 @@ import app.box.pokemon.data.Repository
 
 class ProfileViewModel(
     repository: Repository
-) : BaseViewModel(repository)
+) : BaseViewModel(repository) {
+    fun loadProfile() {
+
+    }
+}
