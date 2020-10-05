@@ -17,22 +17,22 @@ import org.koin.android.viewmodel.ext.android.viewModel
 
 class SearchFragment : BaseFragment(R.layout.fragment_search) {
     private val searchAdapter = SearchAdapter(::onSearchItemClicked)
-    private val fragmentViewModel: SearchViewModel by viewModel()
+    private val searchViewModel: SearchViewModel by viewModel()
 
     private lateinit var fragmentBinding: FragmentSearchBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        fragmentViewModel.loadFavoritesPokemon()
+        searchViewModel.loadFavoritesPokemon()
         setHasOptionsMenu(true)
-        onStates(fragmentViewModel) {
+        onStates(searchViewModel) {
             when (it) {
                 is SearchViewModel.SearchState.ResultState -> displayResultState(it)
                 is SearchViewModel.SearchState.LoadError -> displayErrorState()
             }
         }
 
-        onEvents(fragmentViewModel) {
+        onEvents(searchViewModel) {
             val event = it.take()
             when (event) {
                 is UIEvent.Loading -> handleProgressEvent()
@@ -50,7 +50,7 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
         fragmentBinding = FragmentSearchBinding.bind(view).apply {
             this.lifecycleOwner = viewLifecycleOwner
             this.adapter = searchAdapter
-            this.viewModel = fragmentViewModel
+            this.viewModel = searchViewModel
         }
 
         fragmentBinding.searchRecycler.addItemDecoration(
@@ -83,6 +83,6 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
     }
 
     private fun onSearchItemClicked(item: SearchItem) {
-        fragmentViewModel.onItemSelected(item)
+        searchViewModel.onItemSelected(item)
     }
 }

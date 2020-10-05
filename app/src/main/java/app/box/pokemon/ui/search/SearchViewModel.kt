@@ -1,5 +1,8 @@
 package app.box.pokemon.ui.search
 
+import android.net.Uri
+import androidx.annotation.StringRes
+import app.box.pokemon.R
 import app.box.pokemon.core.BaseViewModel
 import app.box.pokemon.data.Repository
 import io.uniflow.core.flow.data.UIEvent
@@ -30,7 +33,13 @@ class SearchViewModel(
     fun refresh() = loadFavoritesPokemon()
 
     fun onItemSelected(item: SearchItem) = action {
-        sendEvent(SearchEvent.ShowProfile(item.url))
+        val uri = Uri.parse(item.url)
+        val pokemonId = uri.lastPathSegment
+        if (pokemonId != null) {
+            sendEvent(SearchEvent.ShowProfile(pokemonId))
+        } else {
+            sendEvent(SearchEvent.Message(R.string.wrong_url))
+        }
     }
 
     private suspend fun loadFavoritesPokemonsAsync() = withContext(Dispatchers.IO) {
@@ -46,5 +55,6 @@ class SearchViewModel(
 
     sealed class SearchEvent : UIEvent() {
         class ShowProfile(val pokemonUrl: String) : SearchEvent()
+        class Message(@StringRes message: Int) : SearchEvent()
     }
 }

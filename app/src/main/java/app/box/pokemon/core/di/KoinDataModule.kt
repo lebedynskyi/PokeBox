@@ -9,7 +9,7 @@ import okhttp3.OkHttpClient
 import org.koin.dsl.bind
 import org.koin.dsl.module
 import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.converter.moshi.MoshiConverterFactory
 import java.util.concurrent.TimeUnit
 
 val okHttpClient = OkHttpClient.Builder()
@@ -19,7 +19,7 @@ val okHttpClient = OkHttpClient.Builder()
 
 val pokemonRetrofit = Retrofit.Builder()
     .baseUrl(BuildConfig.POKEMON_API_URL)
-    .addConverterFactory(GsonConverterFactory.create())
+    .addConverterFactory(MoshiConverterFactory.create())
     .client(okHttpClient)
     .build()
 

@@ -74,11 +74,8 @@ dependencies {
     implementation "org.koin:koin-android-ext:$koin_version"
 
     // Android MVI pattern
-    // Minimal Core
     implementation 'io.uniflow:uniflow-core:0.11.6'
     testImplementation 'io.uniflow:uniflow-test:0.11.6'
-
-    // AndroidX
     implementation 'io.uniflow:uniflow-androidx:0.11.6'
     testImplementation 'io.uniflow:uniflow-androidx-test:0.11.6'
 
@@ -86,8 +83,8 @@ dependencies {
     implementation "com.squareup.retrofit2:retrofit:2.9.0"
     implementation "com.squareup.retrofit2:converter-gson:2.9.0"
 
-    // Android MVI Architecture
-    
+    // Moshi - Json parser
+    implementation "com.squareup.retrofit2:converter-moshi:2.4.0"
 
     // Android navigation
     implementation "androidx.navigation:navigation-fragment-ktx:$android_navigation_version"

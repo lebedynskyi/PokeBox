@@ -2,6 +2,7 @@ package app.box.pokemon.data
 
 import app.box.pokemon.data.model.ApiPaginationAnswer
 import app.box.pokemon.data.model.ApiNamedResource
+import app.box.pokemon.data.model.PokemonInfo
 import app.box.pokemon.data.source.ApiDataSource
 
 class RepositoryImpl(
@@ -11,8 +12,8 @@ class RepositoryImpl(
         return apiDataSource.getTopPokemons()
     }
 
-    override fun getPokemonById() {
-        TODO("Not implemented Yet")
+    override fun getPokemonById(id: String): PokemonInfo? {
+        return apiDataSource.getPokemonById(id)
     }
 
     override fun searchPokemons() {
