@@ -1,5 +1,6 @@
 package app.box.pokemon.ui.profile
 
+import android.util.Log
 import app.box.pokemon.core.BaseViewModel
 import app.box.pokemon.data.Repository
 import io.uniflow.core.flow.data.UIEvent
