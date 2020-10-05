@@ -1,8 +1,8 @@
 package app.box.pokemon.data.api
 
-import app.box.pokemon.data.model.ApiPaginationAnswer
-import app.box.pokemon.data.model.ApiNamedResource
-import app.box.pokemon.data.model.PokemonInfo
+import app.box.pokemon.data.enteties.ApiPaginationAnswer
+import app.box.pokemon.data.enteties.ApiNamedResource
+import app.box.pokemon.data.enteties.PokemonInfo
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path

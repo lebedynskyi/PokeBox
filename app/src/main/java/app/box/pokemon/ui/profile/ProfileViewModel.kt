@@ -1,6 +1,6 @@
 package app.box.pokemon.ui.profile
 
-import android.util.Log
+import android.text.TextUtils
 import app.box.pokemon.core.BaseViewModel
 import app.box.pokemon.data.Repository
 import io.uniflow.core.flow.data.UIEvent
@@ -29,10 +29,14 @@ class ProfileViewModel(
 
     private suspend fun getProfileAsync(id: String) = withContext(Dispatchers.IO) {
         val profile = repository.getPokemonById(id)
-        return@withContext profile?.let {
+        return@withContext profile?.let { info ->
             ProfileItem(
-                it.name.capitalize(Locale.getDefault()),
-                it.name
+                info.id,
+                info.name.capitalize(Locale.getDefault()),
+                info.height,
+                info.weight,
+                TextUtils.join(", ", info.types.map { it.type.name.capitalize(Locale.getDefault()) }),
+                ""
             )
         }
     }

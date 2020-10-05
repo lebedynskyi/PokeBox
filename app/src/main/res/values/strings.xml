@@ -3,4 +3,10 @@
     <string name="search">Search</string>
     <string name="wrong_url">Cannot parse pokemon URL</string>
     <string name="unknown">Unknown</string>
+    <string name="name">Name</string>
+    <string name="height">Height</string>
+    <string name="height_value">%s cm</string>
+    <string name="weight">Weight</string>
+    <string name="weight_value">%s lbs</string>
+    <string name="type">Type</string>
 </resources>

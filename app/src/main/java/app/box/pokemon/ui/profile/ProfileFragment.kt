@@ -1,7 +1,6 @@
 package app.box.pokemon.ui.profile
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.navigation.fragment.navArgs
 import app.box.pokemon.R

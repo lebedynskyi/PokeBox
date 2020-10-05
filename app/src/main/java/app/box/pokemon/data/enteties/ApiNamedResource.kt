@@ -1,4 +1,4 @@
-package app.box.pokemon.data.model
+package app.box.pokemon.data.enteties
 
 data class ApiNamedResource(
     val name: String,
