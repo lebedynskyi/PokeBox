@@ -20,6 +20,7 @@
             android:layout_width="62dp"
             android:layout_height="62dp"
             android:scaleType="centerCrop"
+            app:urlImage="@{item.imageUrl}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:shapeAppearanceOverlay="@style/RoundedImageView"

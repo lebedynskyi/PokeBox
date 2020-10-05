@@ -44,7 +44,10 @@ class SearchViewModel(
 
     private suspend fun loadFavoritesPokemonsAsync() = withContext(Dispatchers.IO) {
         return@withContext repository.getTopPokemons().results.map {
-            SearchItem(it.name.capitalize(Locale.getDefault()), it.url)
+            val uri = Uri.parse(it.url)
+            val pokemonId = uri.lastPathSegment
+            val imageUrl = pokemonId?.let { repository.getPokemonImageUrl(it) }
+            SearchItem(it.name.capitalize(Locale.getDefault()), it.url, imageUrl)
         }
     }
 

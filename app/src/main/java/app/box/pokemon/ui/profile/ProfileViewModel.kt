@@ -12,10 +12,10 @@ import java.util.*
 class ProfileViewModel(
     repository: Repository
 ) : BaseViewModel(repository) {
-    fun loadProfile(id: String) = action(
+    fun loadProfile(pokemonId: String) = action(
         onAction = {
             sendEvent(UIEvent.Loading)
-            val profile = getProfileAsync(id)
+            val profile = getProfileAsync(pokemonId)
             if (profile != null) {
                 setState(ProfileState.ProfileLoaded(profile))
             } else {
@@ -27,8 +27,8 @@ class ProfileViewModel(
         }
     )
 
-    private suspend fun getProfileAsync(id: String) = withContext(Dispatchers.IO) {
-        val profile = repository.getPokemonById(id)
+    private suspend fun getProfileAsync(pokemonId: String) = withContext(Dispatchers.IO) {
+        val profile = repository.getPokemonById(pokemonId)
         return@withContext profile?.let { info ->
             ProfileItem(
                 info.id,
@@ -36,7 +36,7 @@ class ProfileViewModel(
                 info.height,
                 info.weight,
                 TextUtils.join(", ", info.types.map { it.type.name.capitalize(Locale.getDefault()) }),
-                ""
+                repository.getPokemonImageUrl(pokemonId)
             )
         }
     }

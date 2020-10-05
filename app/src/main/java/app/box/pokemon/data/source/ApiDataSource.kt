@@ -8,7 +8,6 @@ import app.box.pokemon.data.enteties.PokemonInfo
 class ApiDataSource(
     val apiClient: PokemonApiClient
 ) {
-
     fun getTopPokemons(): ApiPaginationAnswer<ApiNamedResource> {
         return apiClient.top().execute().body()!!
     }
