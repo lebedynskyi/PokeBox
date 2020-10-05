@@ -2,8 +2,8 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: "androidx.navigation.safeargs"
 
-def android_navigation_version = "2.3.0"
 def koin_version = "2.1.6"
 
 android {
@@ -37,6 +37,10 @@ android {
         targetCompatibility 1.8
     }
 
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
+
     dataBinding {
         enabled = true
     }
@@ -56,6 +60,8 @@ dependencies {
     // Android App compat
     implementation 'androidx.appcompat:appcompat:1.2.0'
 
+    // Android swipe refresh layout
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
     // Android Constraint Layout
     implementation 'androidx.constraintlayout:constraintlayout:2.0.1'
     // Android material views
@@ -67,10 +73,21 @@ dependencies {
     implementation "org.koin:koin-android-viewmodel:$koin_version"
     implementation "org.koin:koin-android-ext:$koin_version"
 
+    // Android MVI pattern
+    // Minimal Core
+    implementation 'io.uniflow:uniflow-core:0.11.6'
+    testImplementation 'io.uniflow:uniflow-test:0.11.6'
+
+    // AndroidX
+    implementation 'io.uniflow:uniflow-androidx:0.11.6'
+    testImplementation 'io.uniflow:uniflow-androidx-test:0.11.6'
+
     // Retrofit Api client
     implementation "com.squareup.retrofit2:retrofit:2.9.0"
     implementation "com.squareup.retrofit2:converter-gson:2.9.0"
 
+    // Android MVI Architecture
+    
 
     // Android navigation
     implementation "androidx.navigation:navigation-fragment-ktx:$android_navigation_version"

@@ -1,22 +1,12 @@
 package app.box.pokemon.core
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+
 import app.box.pokemon.data.Repository
+import io.uniflow.androidx.flow.AndroidDataFlow
+import io.uniflow.core.flow.data.UIState
 
 open class BaseViewModel(
     protected val repository: Repository
-) : ViewModel() {
-    private val _progressLiveData: MutableLiveData<Boolean> = MutableLiveData(false)
-    val progressLiveData: LiveData<Boolean>
-        get() = _progressLiveData
+) : AndroidDataFlow(defaultState = UIState.Empty) {
 
-    protected fun showProgress() {
-        _progressLiveData.postValue(true)
-    }
-
-    protected fun hideProgress() {
-        _progressLiveData.postValue(false)
-    }
 }

@@ -8,17 +8,20 @@
         android:id="@+id/search"
         android:name="app.box.pokemon.ui.search.SearchFragment">
         <action
-            android:id="@+id/navigation_search_to_profile"
-            app:destination="@id/profile" />
+            android:id="@+id/navigate_to_profile"
+            app:destination="@id/profile">
+            <argument
+                android:name="url"
+                app:argType="string" />
+        </action>
     </fragment>
 
     <fragment
         android:id="@+id/profile"
-        android:name="app.box.pokemon.ui.search.SearchFragment">
+        android:name="app.box.pokemon.ui.profile.ProfileFragment">
 
         <argument
-            android:name="id"
-            android:defaultValue="@null"
+            android:name="url"
             app:argType="string" />
     </fragment>
 </navigation>

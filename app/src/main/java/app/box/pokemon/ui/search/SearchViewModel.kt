@@ -1,34 +1,50 @@
 package app.box.pokemon.ui.search
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
 import app.box.pokemon.core.BaseViewModel
 import app.box.pokemon.data.Repository
+import io.uniflow.core.flow.data.UIEvent
+import io.uniflow.core.flow.data.UIState
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.*
 
 class SearchViewModel(
     repository: Repository
 ) : BaseViewModel(repository) {
-    private val _searchLiveData = MutableLiveData<List<SearchItem>>()
-    val searchLiveData: LiveData<List<SearchItem>>
-        get() = _searchLiveData
 
-    fun loadFavoritesPokemons() {
-        viewModelScope.launch {
-            showProgress()
+    init {
+        loadFavoritesPokemon()
+    }
+
+    fun loadFavoritesPokemon() = action(
+        onAction = {
+            sendEvent(UIEvent.Loading)
             val top = loadFavoritesPokemonsAsync()
-            _searchLiveData.value = top
-            hideProgress()
+            setState { SearchState.ResultState(top) }
+        },
+        onError = { _, _ ->
+            setState { SearchState.LoadError() }
         }
+    )
+
+    fun refresh() = loadFavoritesPokemon()
+
+    fun onItemSelected(item: SearchItem) = action {
+        sendEvent(SearchEvent.ShowProfile(item.url))
     }
 
     private suspend fun loadFavoritesPokemonsAsync() = withContext(Dispatchers.IO) {
         return@withContext repository.getTopPokemons().results.map {
             SearchItem(it.name.capitalize(Locale.getDefault()), it.url)
         }
+    }
+
+    sealed class SearchState : UIState() {
+        class ResultState(val resultList: List<SearchItem>) : SearchState()
+        class LoadError : SearchState()
+    }
+
+    sealed class SearchEvent : UIEvent() {
+        class ShowProfile(val pokemonUrl: String) : SearchEvent()
     }
 }
