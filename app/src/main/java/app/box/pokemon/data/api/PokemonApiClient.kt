@@ -13,12 +13,12 @@ const val DEFAULT_PAGINATION_OFFSET = 0
 
 interface PokemonApiClient {
     @GET("pokemon/")
-    fun top(
+    suspend fun top(
         @Query("limit") limit: Int = DEFAULT_PAGINATION_LIMIT,
         @Query("offset") offset: Int = DEFAULT_PAGINATION_OFFSET
-    ): Call<ApiPaginationAnswer<PokemonSearchInfo>>
+    ): ApiPaginationAnswer<PokemonSearchInfo>
 
     @GET("pokemon/{id}")
-    fun pokemonById(@Path(value = "id", encoded = true) id: String): Call<PokemonInfo>
+    suspend fun pokemonById(@Path(value = "id", encoded = true) id: String): PokemonInfo
 }
 

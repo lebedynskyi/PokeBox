@@ -5,6 +5,6 @@ import app.box.pokemon.data.enteties.PokemonInfo
 
 interface Repository {
     fun getPokemonImageUrl(pokemonId: String): String
-    fun getTopPokemons(): List<PokemonSearchInfo>
-    fun getPokemonById(id: String): PokemonInfo?
+    suspend fun  getTopPokemons(): List<PokemonSearchInfo>
+    suspend fun  getPokemonById(id: String): PokemonInfo?
 }

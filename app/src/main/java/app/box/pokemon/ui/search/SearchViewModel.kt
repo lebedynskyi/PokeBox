@@ -2,6 +2,7 @@ package app.box.pokemon.ui.search
 
 import android.net.Uri
 import androidx.annotation.StringRes
+import androidx.paging.PagedList
 import app.box.pokemon.R
 import app.box.pokemon.core.BaseViewModel
 import app.box.pokemon.data.Repository
@@ -58,7 +59,6 @@ class SearchViewModel(
 
     sealed class SearchEvent : UIEvent() {
         class ShowProfile(val pokemonUrl: String) : SearchEvent()
-        class AvatarEvcailable(image: String)
         class Message(@StringRes message: Int) : SearchEvent()
     }
 }

@@ -17,7 +17,12 @@ class SearchAdapter(val itemListener: (SearchItem) -> Unit) :
     }
 
     override fun onBindViewHolder(holder: SearchHolder, position: Int) {
-        holder.bindItem(getItem(position))
+        val item = getItem(position)
+        if (item != null) {
+            holder.bindItem(item)
+        } else {
+            holder.clear()
+        }
     }
 
     inner class SearchHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -26,6 +31,10 @@ class SearchAdapter(val itemListener: (SearchItem) -> Unit) :
         fun bindItem(item: SearchItem) {
             itemBinding.item = item
             itemBinding.root.setOnClickListener { itemListener.invoke(item) }
+        }
+
+        fun clear() {
+            itemBinding.item = null
         }
     }
 }

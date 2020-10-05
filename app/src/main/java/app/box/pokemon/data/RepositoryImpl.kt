@@ -1,5 +1,7 @@
 package app.box.pokemon.data
 
+import androidx.paging.PagedList
+import androidx.paging.toLiveData
 import app.box.pokemon.BuildConfig
 import app.box.pokemon.data.enteties.PokemonSearchInfo
 import app.box.pokemon.data.enteties.PokemonInfo
@@ -18,7 +20,7 @@ class RepositoryImpl(
     override fun getPokemonImageUrl(pokemonId: String) =
         BuildConfig.POKEMON_IMAGE_API_PLACEHOLDER.replace(ID_PLACEHOLDER, pokemonId)
 
-    override fun getTopPokemons(): List<PokemonSearchInfo> {
+    override suspend fun getTopPokemons(): List<PokemonSearchInfo> {
         val networkState = networkStateDataSource.getCurrentNetworkState()
         return if (networkState != NetworkStateDataSource.NetworkState.OFFLINE) {
             apiDataSource.getTopPokemons().results.also {
@@ -29,7 +31,7 @@ class RepositoryImpl(
         }
     }
 
-    override fun getPokemonById(id: String): PokemonInfo? {
+    override suspend fun getPokemonById(id: String): PokemonInfo? {
         return apiDataSource.getPokemonById(id)
     }
 }
