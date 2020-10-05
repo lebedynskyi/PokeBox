@@ -8,7 +8,7 @@ API are available here: https://pokeapi.co
 1. Min. SDK 21  - ***Done***
 2. Use Kotlin language  - ***Done***
 3. Use Clean Architecture (Repository pattern) and MVI (e.g. Uniflow lib)  - ***Done***
-4. Use JetPack: (ViewModel, Room, Navigation) - ***Room is left***
+4. Use JetPack: (ViewModel, Room, Navigation) - ***Done***
 5. Use Koin (DI)  - ***Done***
 6. Use Retrofit2 and OkHttp3  - ***Done***
 7. Use Coroutines + Flow  
@@ -17,6 +17,6 @@ API are available here: https://pokeapi.co
 10. Publish code in a github public repository  - ***Done***
    
 ### Bonus tasks:  
-1. Make app work offline too  
+1. Make app work offline too - ***Done***
 2. Write Unit Tests     
 3. Customize the project with something you believe could be useful for the app

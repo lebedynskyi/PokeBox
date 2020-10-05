@@ -1,7 +1,7 @@
 package app.box.pokemon.data.api
 
 import app.box.pokemon.data.enteties.ApiPaginationAnswer
-import app.box.pokemon.data.enteties.ApiNamedResource
+import app.box.pokemon.data.enteties.PokemonSearchInfo
 import app.box.pokemon.data.enteties.PokemonInfo
 import retrofit2.Call
 import retrofit2.http.GET
@@ -16,7 +16,7 @@ interface PokemonApiClient {
     fun top(
         @Query("limit") limit: Int = DEFAULT_PAGINATION_LIMIT,
         @Query("offset") offset: Int = DEFAULT_PAGINATION_OFFSET
-    ): Call<ApiPaginationAnswer<ApiNamedResource>>
+    ): Call<ApiPaginationAnswer<PokemonSearchInfo>>
 
     @GET("pokemon/{id}")
     fun pokemonById(@Path(value = "id", encoded = true) id: String): Call<PokemonInfo>

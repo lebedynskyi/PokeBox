@@ -6,7 +6,7 @@ import app.box.pokemon.R
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 
-@BindingAdapter("app:urlImage")
+@BindingAdapter("urlImage")
 fun ImageView.loadImage(imageUrl: String?) {
     Glide.with(this)
         .load(imageUrl)

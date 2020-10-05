@@ -1,10 +1,15 @@
 package app.box.pokemon.core.di
 
+import androidx.room.Room
+import androidx.room.RoomDatabase
 import app.box.pokemon.BuildConfig
 import app.box.pokemon.data.Repository
 import app.box.pokemon.data.RepositoryImpl
 import app.box.pokemon.data.api.PokemonApiClient
+import app.box.pokemon.data.db.PokemonDatabase
 import app.box.pokemon.data.source.ApiDataSource
+import app.box.pokemon.data.source.DBDataSource
+import app.box.pokemon.data.source.NetworkStateDataSource
 import okhttp3.OkHttpClient
 import org.koin.dsl.bind
 import org.koin.dsl.module
@@ -24,7 +29,13 @@ val pokemonRetrofit = Retrofit.Builder()
     .build()
 
 val dataModule = module {
+    // Misc
+    single { NetworkStateDataSource(get()) }
+    // APi
     single { pokemonRetrofit.create(PokemonApiClient::class.java) }
     single { ApiDataSource(get()) }
-    single { RepositoryImpl(get()) } bind Repository::class
+    // DB
+    single { Room.databaseBuilder(get(), PokemonDatabase::class.java, "PokemonDB").build() }
+    single { DBDataSource(get()) }
+    single { RepositoryImpl(get(), get(), get()) } bind Repository::class
 }

@@ -5,6 +5,8 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: "androidx.navigation.safeargs"
 
 def koin_version = "2.1.6"
+def room_version = "2.2.5"
+def uniflow_version = "0.11.6"
 
 android {
     compileSdkVersion 29
@@ -70,16 +72,24 @@ dependencies {
     implementation 'com.google.android.material:material:1.2.1'
 
     // Koin for Android
-    implementation "org.koin:koin-android:2.1.6"
+    implementation "org.koin:koin-android:$koin_version"
     implementation "org.koin:koin-android-scope:$koin_version"
     implementation "org.koin:koin-android-viewmodel:$koin_version"
     implementation "org.koin:koin-android-ext:$koin_version"
 
     // Android MVI pattern
-    implementation 'io.uniflow:uniflow-core:0.11.6'
-    testImplementation 'io.uniflow:uniflow-test:0.11.6'
-    implementation 'io.uniflow:uniflow-androidx:0.11.6'
-    testImplementation 'io.uniflow:uniflow-androidx-test:0.11.6'
+    implementation "io.uniflow:uniflow-core:$uniflow_version"
+    testImplementation "io.uniflow:uniflow-test:$uniflow_version"
+    implementation "io.uniflow:uniflow-androidx:$uniflow_version"
+    testImplementation "io.uniflow:uniflow-androidx-test:$uniflow_version"
+
+    // Android Room database
+    implementation "androidx.room:room-runtime:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
+    implementation "androidx.room:room-ktx:$room_version"
+
+    // Android pagination
+//    implementation "androidx.paging:paging-runtime:2.1.2"
 
     // Retrofit Api client
     implementation "com.squareup.retrofit2:retrofit:2.9.0"

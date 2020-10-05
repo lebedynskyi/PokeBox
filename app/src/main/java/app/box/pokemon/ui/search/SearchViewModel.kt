@@ -43,7 +43,7 @@ class SearchViewModel(
     }
 
     private suspend fun loadFavoritesPokemonsAsync() = withContext(Dispatchers.IO) {
-        return@withContext repository.getTopPokemons().results.map {
+        return@withContext repository.getTopPokemons().map {
             val uri = Uri.parse(it.url)
             val pokemonId = uri.lastPathSegment
             val imageUrl = pokemonId?.let { repository.getPokemonImageUrl(it) }
@@ -58,6 +58,7 @@ class SearchViewModel(
 
     sealed class SearchEvent : UIEvent() {
         class ShowProfile(val pokemonUrl: String) : SearchEvent()
+        class AvatarEvcailable(image: String)
         class Message(@StringRes message: Int) : SearchEvent()
     }
 }
