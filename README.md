@@ -13,7 +13,7 @@ API are available here: https://pokeapi.co
 6. Use Retrofit2 and OkHttp3  - ***Done***
 7. Use Coroutines + Flow  
 8. Use Moshi and Glide  - ***Done***
-9. Create pagination with Jetpack’s Paging library  
+9. Create pagination with Jetpack’s Paging library  ***Done***
 10. Publish code in a github public repository  - ***Done***
    
 ### Bonus tasks:  

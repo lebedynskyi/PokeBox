@@ -11,7 +11,6 @@ import app.box.pokemon.core.BaseFragment
 import app.box.pokemon.data.enteties.PokemonSearchInfo
 import app.box.pokemon.databinding.FragmentSearchBinding
 import app.box.pokemon.ui.showSnackBar
-import com.google.android.material.snackbar.Snackbar
 import io.uniflow.androidx.flow.onEvents
 import io.uniflow.androidx.flow.onStates
 import io.uniflow.core.flow.data.UIEvent
@@ -30,7 +29,6 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
         setHasOptionsMenu(true)
         onStates(searchViewModel) {
             when (it) {
-                is SearchViewModel.SearchState.ResultState -> displayResultState(it)
                 is SearchViewModel.SearchState.ResultStatePaged -> displayResultStatePaged(it)
                 is SearchViewModel.SearchState.LoadError -> displayErrorState(it)
             }
@@ -74,12 +72,6 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
     private fun handleShowProfileEvent(event: SearchViewModel.SearchEvent.ShowProfile) {
         val action = SearchFragmentDirections.navigateToProfile(event.pokemonUrl)
         navigation.navigate(action)
-    }
-
-    private fun displayResultState(resultState: SearchViewModel.SearchState.ResultState) {
-//        fragmentBinding.searchProgress.isRefreshing = false
-//        fragmentBinding.searchProgress
-//        searchAdapter.submitList(resultState.resultList)
     }
 
     private fun displayResultStatePaged(resultState: SearchViewModel.SearchState.ResultStatePaged) {
