@@ -1,10 +1,10 @@
 package app.box.pokemon.data
 
+import androidx.paging.DataSource
 import androidx.paging.PagedList
-import androidx.paging.toLiveData
 import app.box.pokemon.BuildConfig
-import app.box.pokemon.data.enteties.PokemonSearchInfo
 import app.box.pokemon.data.enteties.PokemonInfo
+import app.box.pokemon.data.enteties.PokemonSearchInfo
 import app.box.pokemon.data.source.ApiDataSource
 import app.box.pokemon.data.source.DBDataSource
 import app.box.pokemon.data.source.NetworkStateDataSource
@@ -20,10 +20,25 @@ class RepositoryImpl(
     override fun getPokemonImageUrl(pokemonId: String) =
         BuildConfig.POKEMON_IMAGE_API_PLACEHOLDER.replace(ID_PLACEHOLDER, pokemonId)
 
+    override suspend fun getTopPokemonsPaged(): PagedList<PokemonSearchInfo> {
+        val networkState = networkStateDataSource.getCurrentNetworkState()
+
+        val dataSource: DataSource<Int, PokemonSearchInfo> =
+            if (networkState == NetworkStateDataSource.NetworkState.OFFLINE) {
+                dbDataSource.getTopPokemonsPaged().create()
+            } else {
+                apiDataSource
+            }
+
+        return PagedList.Builder(dataSource, PAGINATION_LIMIT)
+            .setInitialKey(PAGINATION_LIMIT)
+            .build()
+    }
+
     override suspend fun getTopPokemons(): List<PokemonSearchInfo> {
         val networkState = networkStateDataSource.getCurrentNetworkState()
         return if (networkState != NetworkStateDataSource.NetworkState.OFFLINE) {
-            apiDataSource.getTopPokemons().results.also {
+            apiDataSource.getTopPokemons(PAGINATION_OFFSET, PAGINATION_LIMIT).results.also {
                 dbDataSource.savePokemons(it)
             }
         } else {
