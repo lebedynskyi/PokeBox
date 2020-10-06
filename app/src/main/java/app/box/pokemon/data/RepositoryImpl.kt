@@ -5,8 +5,13 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import app.box.pokemon.data.enteties.PokemonInfo
 import app.box.pokemon.data.source.*
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.*
 
 @ExperimentalPagingApi
+@ExperimentalCoroutinesApi
+@FlowPreview
 class RepositoryImpl(
     private val apiDataSource: ApiDataSource,
     private val dbDataSource: DBDataSource,
@@ -28,7 +33,17 @@ class RepositoryImpl(
         dbDataSource.getTopPokemonsPaged()
     }.flow
 
-    override suspend fun getPokemonById(id: Int): PokemonInfo? {
-        return apiDataSource.getPokemonById(id)
+    override fun getPokemonById(id: Int): Flow<PokemonInfo?> {
+        return flowOf(
+            flow {
+                if (networkStateDataSource.getCurrentNetworkState() != NetworkStateDataSource.NetworkState.OFFLINE) {
+                    val pokemon = apiDataSource.getPokemonById(id)
+                    if (pokemon != null ) {
+                        dbDataSource.savePokemon(pokemon)
+                    }
+                }
+            },
+            dbDataSource.getPokemonById(id)
+        ).flattenMerge()
     }
 }

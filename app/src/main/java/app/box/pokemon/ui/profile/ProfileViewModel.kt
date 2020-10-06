@@ -1,48 +1,36 @@
 package app.box.pokemon.ui.profile
 
-import android.text.TextUtils
 import app.box.pokemon.core.BaseViewModel
 import app.box.pokemon.data.Repository
+import app.box.pokemon.data.enteties.PokemonInfo
 import io.uniflow.core.flow.data.UIEvent
 import io.uniflow.core.flow.data.UIState
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.withContext
-import java.util.*
 
 class ProfileViewModel(
     repository: Repository
 ) : BaseViewModel(repository) {
-    fun loadProfile(pokemonId: Int) = action(
-        onAction = {
-            sendEvent(UIEvent.Loading)
-            val profile = getProfileAsync(pokemonId)
-            if (profile != null) {
-                setState(ProfileState.ProfileLoaded(profile))
-            } else {
-                setState(ProfileState.NotFound)
-            }
-        },
-        onError = { _, _ ->
 
-        }
-    )
+    fun loadProfile(pokemonId: Int) = action {
+        sendEvent(UIEvent.Loading)
+        repository.getPokemonById(pokemonId).filterNotNull()
+            .collect { pokemon ->
+                setState { ProfileState.ProfileLoaded(pokemon) }
+            }
+    }
 
     private suspend fun getProfileAsync(pokemonId: Int) = withContext(Dispatchers.IO) {
-        val profile = repository.getPokemonById(pokemonId)
-        return@withContext profile?.let { info ->
-            ProfileItem(
-                info.id,
-                info.name.capitalize(Locale.getDefault()),
-                info.height,
-                info.weight,
-                TextUtils.join(", ", info.types.map { it.type.name.capitalize(Locale.getDefault()) }),
-                info.imageUrl
-            )
-        }
+        return@withContext repository.getPokemonById(pokemonId).filterNotNull()
+            .collect { pokemon ->
+
+            }
     }
 
     sealed class ProfileState : UIState() {
-        class ProfileLoaded(val profileItem: ProfileItem) : ProfileState()
+        class ProfileLoaded(val profileItem: PokemonInfo) : ProfileState()
         object NotFound : ProfileState()
     }
 }
