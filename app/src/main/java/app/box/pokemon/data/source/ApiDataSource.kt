@@ -1,8 +1,6 @@
 package app.box.pokemon.data.source
 
 import android.net.Uri
-import android.util.Log
-import androidx.paging.PageKeyedDataSource
 import app.box.pokemon.BuildConfig
 import app.box.pokemon.data.api.PokemonApiClient
 import app.box.pokemon.data.api.enteties.PokemonInfoApiResponse
@@ -11,57 +9,24 @@ import app.box.pokemon.data.enteties.PokemonSearchInfo
 import app.box.pokemon.data.enteties.PokemonInfo
 import app.box.pokemon.data.enteties.PokemonType
 import app.box.pokemon.data.enteties.ValuePair
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
-// TODO notify end of pagination
 const val ID_PLACEHOLDER = "{id}"
 
 class ApiDataSource(
     private val apiClient: PokemonApiClient
-) : PageKeyedDataSource<Int, PokemonSearchInfo>() {
-
-    override fun loadInitial(
-        params: LoadInitialParams<Int>,
-        callback: LoadInitialCallback<Int, PokemonSearchInfo>
-    ) {
-        Log.d("LOAD", "initial $params")
-        GlobalScope.launch {
-            val pagination = apiClient.topPokemons(PAGINATION_OFFSET, PAGINATION_LIMIT)
-            callback.onResult(mapResult(pagination.results), 0, PAGINATION_LIMIT)
-        }
+) {
+    suspend fun getTopPokemons(offset: Int, limit: Int): List<PokemonSearchInfo> {
+        return mapResult(apiClient.topPokemons(offset, limit).results)
     }
 
-    override fun loadBefore(
-        params: LoadParams<Int>,
-        callback: LoadCallback<Int, PokemonSearchInfo>
-    ) {
-        Log.d("LOAD", "more $params")
-        GlobalScope.launch {
-            val pagination = apiClient.topPokemons(params.key, PAGINATION_LIMIT)
-            callback.onResult(mapResult(pagination.results), params.key - PAGINATION_LIMIT)
-        }
-    }
-
-    override fun loadAfter(
-        params: LoadParams<Int>,
-        callback: LoadCallback<Int, PokemonSearchInfo>
-    ) {
-        Log.d("LOAD", "after $params")
-        GlobalScope.launch {
-            val pagination = apiClient.topPokemons(params.key, PAGINATION_LIMIT)
-            callback.onResult(mapResult(pagination.results), params.key + PAGINATION_LIMIT)
-        }
-    }
-
-    suspend fun getPokemonById(id: String): PokemonInfo? {
+    suspend fun getPokemonById(id: Int): PokemonInfo? {
         return mapResult(apiClient.pokemonById(id))
     }
 
     private fun mapResult(apiResult: List<PokemonSearchApiResponse>): List<PokemonSearchInfo> {
         return apiResult.map {
             val (pokemonId, pokemonImage) = parsePokemonUrl(it.url)
-            PokemonSearchInfo(pokemonId.orEmpty(), it.url, it.name.capitalize(), pokemonImage)
+            PokemonSearchInfo(pokemonId, it.url, it.name.capitalize(), pokemonImage)
         }
     }
 
@@ -81,7 +46,7 @@ class ApiDataSource(
         }
     }
 
-    private fun parsePokemonUrl(url: String): Pair<String?, String?> {
+    private fun parsePokemonUrl(url: String): Pair<Int, String?> {
         val uri = Uri.parse(url)
         val pokemonId = uri.lastPathSegment
         val imageUrl = pokemonId?.let {
@@ -91,6 +56,6 @@ class ApiDataSource(
             )
         }
 
-        return pokemonId to imageUrl
+        return (pokemonId?.toInt() ?: -1) to imageUrl
     }
 }

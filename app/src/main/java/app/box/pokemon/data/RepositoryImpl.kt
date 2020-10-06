@@ -13,7 +13,12 @@ class RepositoryImpl(
     private val networkStateDataSource: NetworkStateDataSource,
 ) : Repository {
     override fun getTopPokemonsPaged() = Pager(
-        config = PagingConfig(PAGINATION_LIMIT),
+        config = PagingConfig(
+            pageSize = PAGINATION_LIMIT,
+            prefetchDistance = 10,
+            initialLoadSize = PAGINATION_LIMIT,
+            enablePlaceholders = true
+        ),
         remoteMediator = PagingPokemonSourceMediator(
             apiDataSource,
             dbDataSource,
@@ -23,7 +28,7 @@ class RepositoryImpl(
         dbDataSource.getTopPokemonsPaged()
     }.flow
 
-    override suspend fun getPokemonById(id: String): PokemonInfo? {
+    override suspend fun getPokemonById(id: Int): PokemonInfo? {
         return apiDataSource.getPokemonById(id)
     }
 }

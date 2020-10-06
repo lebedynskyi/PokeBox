@@ -15,6 +15,6 @@ interface PokemonApiClient {
     ): PaginationApiAnswer<PokemonSearchApiResponse>
 
     @GET("pokemon/{id}")
-    suspend fun pokemonById(@Path(value = "id", encoded = true) id: String): PokemonInfoApiResponse
+    suspend fun pokemonById(@Path(value = "id", encoded = true) id: Int): PokemonInfoApiResponse
 }
 

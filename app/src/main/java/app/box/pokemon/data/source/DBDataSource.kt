@@ -5,13 +5,21 @@ import app.box.pokemon.data.db.PokemonDatabase
 import app.box.pokemon.data.enteties.PokemonSearchInfo
 
 class DBDataSource(
-    private val pokemonDatabase: PokemonDatabase
+    val pokemonDatabase: PokemonDatabase
 ) {
     fun getTopPokemonsPaged(): PagingSource<Int, PokemonSearchInfo> {
         return pokemonDatabase.pokemonDao().getTopPokemonsPaging()
     }
 
-    fun savePokemons(pokemons: List<PokemonSearchInfo>) {
+    suspend fun getTopPokemonSavedNumber(): Int {
+        return pokemonDatabase.pokemonDao().getTopPokemonCount()
+    }
+
+    suspend fun savePokemons(pokemons: List<PokemonSearchInfo>) {
         pokemonDatabase.pokemonDao().saveTopPokemons(pokemons)
+    }
+
+    suspend fun removePokemons() {
+        pokemonDatabase.pokemonDao().clearPokemons()
     }
 }

@@ -7,5 +7,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface Repository {
     fun  getTopPokemonsPaged(): Flow<PagingData<PokemonSearchInfo>>
-    suspend fun  getPokemonById(id: String): PokemonInfo?
+    suspend fun  getPokemonById(id: Int): PokemonInfo?
 }

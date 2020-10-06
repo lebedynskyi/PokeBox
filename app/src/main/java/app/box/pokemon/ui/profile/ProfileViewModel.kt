@@ -12,7 +12,7 @@ import java.util.*
 class ProfileViewModel(
     repository: Repository
 ) : BaseViewModel(repository) {
-    fun loadProfile(pokemonId: String) = action(
+    fun loadProfile(pokemonId: Int) = action(
         onAction = {
             sendEvent(UIEvent.Loading)
             val profile = getProfileAsync(pokemonId)
@@ -27,7 +27,7 @@ class ProfileViewModel(
         }
     )
 
-    private suspend fun getProfileAsync(pokemonId: String) = withContext(Dispatchers.IO) {
+    private suspend fun getProfileAsync(pokemonId: Int) = withContext(Dispatchers.IO) {
         val profile = repository.getPokemonById(pokemonId)
         return@withContext profile?.let { info ->
             ProfileItem(

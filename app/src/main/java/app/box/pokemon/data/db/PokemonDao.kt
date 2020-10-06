@@ -11,12 +11,20 @@ import app.box.pokemon.data.enteties.PokemonSearchInfo
 
 @Dao
 interface PokemonDao {
-    @Query("SELECT * FROM Pokemons ORDER BY url ASC")
+    // Pokemon Search
+    @Query("SELECT * FROM Pokemons ORDER BY id COLLATE NOCASE ASC")
     fun getTopPokemonsPaging(): PagingSource<Int, PokemonSearchInfo>
 
-    @Insert(entity = PokemonSearchInfo::class, onConflict = OnConflictStrategy.REPLACE)
-    fun saveTopPokemons(pokemons: List<PokemonSearchInfo>)
+    @Query("SELECT COUNT(url) FROM Pokemons")
+    suspend fun getTopPokemonCount(): Int
 
+    @Insert(entity = PokemonSearchInfo::class, onConflict = OnConflictStrategy.REPLACE)
+    suspend fun saveTopPokemons(pokemons: List<PokemonSearchInfo>)
+
+    @Query("DELETE FROM pokemons")
+    suspend fun clearPokemons()
+
+    // Pokemon Details
     @Query("SELECT * FROM PokemonInfo WHERE id = :pokemonId")
     fun getPokemonInfo(pokemonId: String): PokemonInfo
 

@@ -1,6 +1,7 @@
 package app.box.pokemon.core.di
 
 import androidx.core.content.ContextCompat
+import androidx.paging.ExperimentalPagingApi
 import androidx.room.Room
 import app.box.pokemon.BuildConfig
 import app.box.pokemon.data.Repository
@@ -32,6 +33,7 @@ val pokemonRetrofit = Retrofit.Builder()
     .client(okHttpClient)
     .build()
 
+@ExperimentalPagingApi
 val dataModule = module {
     // Misc
     single { NetworkStateDataSource(get()) }
@@ -45,5 +47,5 @@ val dataModule = module {
     //
     single (qualifier = named("Background"), definition = {Executors.newSingleThreadExecutor()}) bind Executor::class
     single (qualifier = named("Main"), definition = {ContextCompat.getMainExecutor(get())}) bind Executor::class
-    single { RepositoryImpl(get(), get(), get(), get(named("Background")), get(named("Main"))) } bind Repository::class
+    single { RepositoryImpl(get(), get(), get()) } bind Repository::class
 }

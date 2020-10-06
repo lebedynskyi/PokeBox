@@ -11,7 +11,8 @@ import app.box.pokemon.data.enteties.PokemonSearchInfo
 import app.box.pokemon.databinding.ItemSearchBinding
 
 class SearchAdapter(val itemListener: (PokemonSearchInfo) -> Unit) :
-    PagingDataAdapter<PokemonSearchInfo, SearchAdapter.SearchHolder>(searchDiffCalback) {
+    PagingDataAdapter<PokemonSearchInfo, SearchAdapter.SearchHolder>(SearchDiffCallback) {
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_search, parent, false)
         return SearchHolder(view)
@@ -40,13 +41,13 @@ class SearchAdapter(val itemListener: (PokemonSearchInfo) -> Unit) :
     }
 }
 
-object searchDiffCalback : DiffUtil.ItemCallback<PokemonSearchInfo>() {
+object SearchDiffCallback : DiffUtil.ItemCallback<PokemonSearchInfo>() {
     override fun areItemsTheSame(oldItem: PokemonSearchInfo, newItem: PokemonSearchInfo): Boolean {
         return oldItem === newItem
     }
 
     override fun areContentsTheSame(oldItem: PokemonSearchInfo, newItem: PokemonSearchInfo
     ): Boolean {
-        return oldItem.equals(newItem)
+        return oldItem == newItem
     }
 }
