@@ -1,7 +1,6 @@
 package app.box.pokemon.core.di
 
 import androidx.room.Room
-import androidx.room.RoomDatabase
 import app.box.pokemon.BuildConfig
 import app.box.pokemon.data.Repository
 import app.box.pokemon.data.RepositoryImpl

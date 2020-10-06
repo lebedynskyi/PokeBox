@@ -1,20 +1,20 @@
 package app.box.pokemon.data.api
 
-import app.box.pokemon.data.enteties.ApiPaginationAnswer
-import app.box.pokemon.data.enteties.PokemonSearchInfo
-import app.box.pokemon.data.enteties.PokemonInfo
+import app.box.pokemon.data.api.enteties.PaginationApiAnswer
+import app.box.pokemon.data.api.enteties.PokemonInfoApiResponse
+import app.box.pokemon.data.api.enteties.PokemonSearchApiResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface PokemonApiClient {
     @GET("pokemon/")
-    suspend fun top(
+    suspend fun topPokemons(
         @Query("offset") offset: Int,
         @Query("limit") limit: Int
-    ): ApiPaginationAnswer<PokemonSearchInfo>
+    ): PaginationApiAnswer<PokemonSearchApiResponse>
 
     @GET("pokemon/{id}")
-    suspend fun pokemonById(@Path(value = "id", encoded = true) id: String): PokemonInfo
+    suspend fun pokemonById(@Path(value = "id", encoded = true) id: String): PokemonInfoApiResponse
 }
 

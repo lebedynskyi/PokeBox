@@ -17,11 +17,12 @@ data class PokemonInfo(
     val height: Int,
     val weight: Long,
     val types: List<PokemonType>,
+    val imageUrl: String?
 )
 
 data class PokemonType(
     val slot: Int,
-    val type: NameUrlPair
+    val type: ValuePair
 )
 
 class PokemonTypeConverter {

@@ -6,5 +6,5 @@ data class ProfileItem(
     val height: Int,
     val weight: Long,
     val type: String,
-    val imageUrl: String
+    val imageUrl: String?
 )

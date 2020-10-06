@@ -8,7 +8,10 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import app.box.pokemon.R
 import app.box.pokemon.core.BaseFragment
+import app.box.pokemon.data.enteties.PokemonSearchInfo
 import app.box.pokemon.databinding.FragmentSearchBinding
+import app.box.pokemon.ui.showSnackBar
+import com.google.android.material.snackbar.Snackbar
 import io.uniflow.androidx.flow.onEvents
 import io.uniflow.androidx.flow.onStates
 import io.uniflow.core.flow.data.UIEvent
@@ -28,7 +31,8 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
         onStates(searchViewModel) {
             when (it) {
                 is SearchViewModel.SearchState.ResultState -> displayResultState(it)
-                is SearchViewModel.SearchState.LoadError -> displayErrorState()
+                is SearchViewModel.SearchState.ResultStatePaged -> displayResultStatePaged(it)
+                is SearchViewModel.SearchState.LoadError -> displayErrorState(it)
             }
         }
 
@@ -73,16 +77,23 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
     }
 
     private fun displayResultState(resultState: SearchViewModel.SearchState.ResultState) {
+//        fragmentBinding.searchProgress.isRefreshing = false
+//        fragmentBinding.searchProgress
+//        searchAdapter.submitList(resultState.resultList)
+    }
+
+    private fun displayResultStatePaged(resultState: SearchViewModel.SearchState.ResultStatePaged) {
         fragmentBinding.searchProgress.isRefreshing = false
         fragmentBinding.searchProgress
-        searchAdapter.submitList(resultState.resultList)
+        searchAdapter.submitList(resultState.pagination)
     }
 
-    private fun displayErrorState() {
-
+    private fun displayErrorState(errorState: SearchViewModel.SearchState.LoadError) {
+        errorState.error.printStackTrace()
+        showSnackBar(errorState.error.message)
     }
 
-    private fun onSearchItemClicked(item: SearchItem) {
+    private fun onSearchItemClicked(item: PokemonSearchInfo) {
         searchViewModel.onItemSelected(item)
     }
 }

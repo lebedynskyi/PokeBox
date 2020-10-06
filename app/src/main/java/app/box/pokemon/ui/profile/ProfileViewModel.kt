@@ -36,7 +36,7 @@ class ProfileViewModel(
                 info.height,
                 info.weight,
                 TextUtils.join(", ", info.types.map { it.type.name.capitalize(Locale.getDefault()) }),
-                repository.getPokemonImageUrl(pokemonId)
+                info.imageUrl
             )
         }
     }
@@ -44,9 +44,5 @@ class ProfileViewModel(
     sealed class ProfileState : UIState() {
         class ProfileLoaded(val profileItem: ProfileItem) : ProfileState()
         object NotFound : ProfileState()
-    }
-
-    sealed class ProfileEvent() : UIEvent() {
-
     }
 }

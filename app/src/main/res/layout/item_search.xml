@@ -7,7 +7,7 @@
 
         <variable
             name="item"
-            type="app.box.pokemon.ui.search.SearchItem" />
+            type="app.box.pokemon.data.enteties.PokemonSearchInfo" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
