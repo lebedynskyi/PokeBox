@@ -1,17 +1,13 @@
 package app.box.pokemon.data.source
 
-import androidx.paging.DataSource
+import androidx.paging.PagingSource
 import app.box.pokemon.data.db.PokemonDatabase
 import app.box.pokemon.data.enteties.PokemonSearchInfo
 
 class DBDataSource(
     private val pokemonDatabase: PokemonDatabase
 ) {
-    fun getTopPokemons(): List<PokemonSearchInfo> {
-        return pokemonDatabase.pokemonDao().getTopPokemons()
-    }
-
-    fun getTopPokemonsPaged(): DataSource.Factory<Int, PokemonSearchInfo> {
+    fun getTopPokemonsPaged(): PagingSource<Int, PokemonSearchInfo> {
         return pokemonDatabase.pokemonDao().getTopPokemonsPaging()
     }
 

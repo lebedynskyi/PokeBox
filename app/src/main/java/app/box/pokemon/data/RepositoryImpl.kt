@@ -1,37 +1,27 @@
 package app.box.pokemon.data
 
-import androidx.paging.DataSource
-import androidx.paging.PagedList
+import androidx.paging.ExperimentalPagingApi
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
 import app.box.pokemon.data.enteties.PokemonInfo
-import app.box.pokemon.data.enteties.PokemonSearchInfo
-import app.box.pokemon.data.source.ApiDataSource
-import app.box.pokemon.data.source.DBDataSource
-import app.box.pokemon.data.source.NetworkStateDataSource
-import java.util.concurrent.Executor
+import app.box.pokemon.data.source.*
 
+@ExperimentalPagingApi
 class RepositoryImpl(
     private val apiDataSource: ApiDataSource,
     private val dbDataSource: DBDataSource,
     private val networkStateDataSource: NetworkStateDataSource,
-    private val backgroundExecutor: Executor,
-    private val mainExecutor: Executor
 ) : Repository {
-    override suspend fun getTopPokemonsPaged(): PagedList<PokemonSearchInfo> {
-        val networkState = networkStateDataSource.getCurrentNetworkState()
-
-        val dataSource: DataSource<Int, PokemonSearchInfo> =
-            if (networkState == NetworkStateDataSource.NetworkState.OFFLINE) {
-                dbDataSource.getTopPokemonsPaged().create()
-            } else {
-                apiDataSource
-            }
-
-        return PagedList.Builder(dataSource, PAGINATION_LIMIT)
-            .setInitialKey(PAGINATION_LIMIT)
-            .setNotifyExecutor(mainExecutor)
-            .setFetchExecutor(backgroundExecutor)
-            .build()
-    }
+    override fun getTopPokemonsPaged() = Pager(
+        config = PagingConfig(PAGINATION_LIMIT),
+        remoteMediator = PagingPokemonSourceMediator(
+            apiDataSource,
+            dbDataSource,
+            networkStateDataSource
+        )
+    ) {
+        dbDataSource.getTopPokemonsPaged()
+    }.flow
 
     override suspend fun getPokemonById(id: String): PokemonInfo? {
         return apiDataSource.getPokemonById(id)

@@ -1,13 +1,11 @@
 package app.box.pokemon.data
 
-import androidx.paging.PagedList
-import app.box.pokemon.data.enteties.PokemonSearchInfo
+import androidx.paging.PagingData
 import app.box.pokemon.data.enteties.PokemonInfo
-
-const val PAGINATION_LIMIT = 20
-const val PAGINATION_OFFSET = 0
+import app.box.pokemon.data.enteties.PokemonSearchInfo
+import kotlinx.coroutines.flow.Flow
 
 interface Repository {
-    suspend fun  getTopPokemonsPaged(): PagedList<PokemonSearchInfo>
+    fun  getTopPokemonsPaged(): Flow<PagingData<PokemonSearchInfo>>
     suspend fun  getPokemonById(id: String): PokemonInfo?
 }

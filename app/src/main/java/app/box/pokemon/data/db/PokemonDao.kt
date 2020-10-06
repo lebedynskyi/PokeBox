@@ -1,6 +1,6 @@
 package app.box.pokemon.data.db
 
-import androidx.paging.DataSource
+import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -12,10 +12,7 @@ import app.box.pokemon.data.enteties.PokemonSearchInfo
 @Dao
 interface PokemonDao {
     @Query("SELECT * FROM Pokemons ORDER BY url ASC")
-    fun getTopPokemons(): List<PokemonSearchInfo>
-
-    @Query("SELECT * FROM Pokemons ORDER BY url ASC")
-    fun getTopPokemonsPaging(): DataSource.Factory<Int, PokemonSearchInfo>
+    fun getTopPokemonsPaging(): PagingSource<Int, PokemonSearchInfo>
 
     @Insert(entity = PokemonSearchInfo::class, onConflict = OnConflictStrategy.REPLACE)
     fun saveTopPokemons(pokemons: List<PokemonSearchInfo>)

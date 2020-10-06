@@ -15,6 +15,7 @@ import io.uniflow.androidx.flow.onEvents
 import io.uniflow.androidx.flow.onStates
 import io.uniflow.core.flow.data.UIEvent
 import kotlinx.android.synthetic.main.fragment_search.*
+import kotlinx.coroutines.flow.collectLatest
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class SearchFragment : BaseFragment(R.layout.fragment_search) {
@@ -75,9 +76,14 @@ class SearchFragment : BaseFragment(R.layout.fragment_search) {
     }
 
     private fun displayResultStatePaged(resultState: SearchViewModel.SearchState.ResultStatePaged) {
+        resultState.pagination.collectLatest {
+            adapter.submitData(it)
+        }
+
         fragmentBinding.searchProgress.isRefreshing = false
         fragmentBinding.searchProgress
-        searchAdapter.submitList(resultState.pagination)
+        resultState.pagination
+        searchAdapter.submitList()
     }
 
     private fun displayErrorState(errorState: SearchViewModel.SearchState.LoadError) {

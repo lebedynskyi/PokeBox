@@ -4,8 +4,6 @@ import android.net.Uri
 import android.util.Log
 import androidx.paging.PageKeyedDataSource
 import app.box.pokemon.BuildConfig
-import app.box.pokemon.data.PAGINATION_LIMIT
-import app.box.pokemon.data.PAGINATION_OFFSET
 import app.box.pokemon.data.api.PokemonApiClient
 import app.box.pokemon.data.api.enteties.PokemonInfoApiResponse
 import app.box.pokemon.data.api.enteties.PokemonSearchApiResponse
