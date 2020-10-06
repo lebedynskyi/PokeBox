@@ -13,7 +13,7 @@ import com.squareup.moshi.Types
 data class PokemonInfo(
     @PrimaryKey
     val id: Int,
-    val name: String,
+    var name: String,
     val height: Int,
     val weight: Long,
     val types: List<PokemonType>,

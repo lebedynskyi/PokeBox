@@ -4,11 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <import type="android.text.TextUtils"/>
+
+        <import type="android.text.TextUtils" />
 
         <variable
             name="profileItem"
-            type="app.box.pokemon.ui.profile.ProfileItem" />
+            type="app.box.pokemon.data.enteties.PokemonInfo" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -168,11 +169,11 @@
                     android:layout_marginStart="12dp"
                     android:layout_marginTop="16dp"
                     android:gravity="start|center_vertical"
-                    android:text="@{profileItem.type}"
                     app:layout_constraintHorizontal_weight="1"
                     app:layout_constraintLeft_toRightOf="@id/type_name"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/height_value"
+                    app:pokemonTypes="@{profileItem.types}"
                     tools:text="Normal, Fire" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>

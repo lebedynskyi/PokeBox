@@ -11,12 +11,12 @@ API are available here: https://pokeapi.co
 4. Use JetPack: (ViewModel, Room, Navigation) - ***Done***
 5. Use Koin (DI)  - ***Done***
 6. Use Retrofit2 and OkHttp3  - ***Done***
-7. Use Coroutines + Flow  
+7. Use Coroutines + Flow  ***Done***
 8. Use Moshi and Glide  - ***Done***
 9. Create pagination with Jetpack’s Paging library  ***Done***
 10. Publish code in a github public repository  - ***Done***
    
 ### Bonus tasks:  
 1. Make app work offline too - ***Done***
-2. Write Unit Tests     
+2. Write Unit Tests  ***Not enough time***
 3. Customize the project with something you believe could be useful for the app

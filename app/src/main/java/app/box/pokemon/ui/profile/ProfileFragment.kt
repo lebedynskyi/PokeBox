@@ -29,7 +29,6 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
         onStates(profileViewModel) {
             when (it) {
                 is ProfileViewModel.ProfileState.ProfileLoaded -> displayProfileState(it)
-                is ProfileViewModel.ProfileState.NotFound -> displayEmptyState(it)
             }
         }
 
@@ -42,10 +41,6 @@ class ProfileFragment : BaseFragment(R.layout.fragment_profile) {
 
     private fun displayProfileState(profileState: ProfileViewModel.ProfileState.ProfileLoaded) {
         fragmentBinding.profileItem = profileState.profileItem
-    }
-
-    private fun displayEmptyState(uiState: ProfileViewModel.ProfileState.NotFound) {
-
     }
 
     private fun showLoading() {
