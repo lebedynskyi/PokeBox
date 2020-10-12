@@ -22,6 +22,7 @@ class SearchViewModel(
     repository: Repository
 ) : BaseViewModel(repository) {
     private val searchQueriesChanel = Channel<String?>(Channel.UNLIMITED)
+    private var latestSearchQuery : String? = null
 
     init {
         viewModelScope.launch {

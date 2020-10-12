@@ -41,6 +41,16 @@ class ApiDataSource(
                 BuildConfig.POKEMON_IMAGE_API_PLACEHOLDER.replace(
                     ID_PLACEHOLDER,
                     pokemon.id.toString()
+                ),
+                listOfNotNull(
+                    apiResult.sprites.back_default,
+                    apiResult.sprites.back_female,
+                    apiResult.sprites.back_shiny,
+                    apiResult.sprites.back_shiny_female,
+                    apiResult.sprites.front_default,
+                    apiResult.sprites.front_female,
+                    apiResult.sprites.front_shiny,
+                    apiResult.sprites.front_shiny_female
                 )
             )
         }
