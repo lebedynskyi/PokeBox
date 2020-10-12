@@ -43,7 +43,7 @@ class SearchAdapter(val itemListener: (PokemonSearchInfo) -> Unit) :
 
 object SearchDiffCallback : DiffUtil.ItemCallback<PokemonSearchInfo>() {
     override fun areItemsTheSame(oldItem: PokemonSearchInfo, newItem: PokemonSearchInfo): Boolean {
-        return oldItem === newItem
+        return oldItem == newItem
     }
 
     override fun areContentsTheSame(oldItem: PokemonSearchInfo, newItem: PokemonSearchInfo

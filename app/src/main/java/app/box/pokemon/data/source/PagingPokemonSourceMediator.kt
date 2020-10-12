@@ -9,7 +9,6 @@ import app.box.pokemon.data.enteties.PokemonSearchInfo
 
 const val PAGINATION_LIMIT = 20
 const val PAGINATION_OFFSET = 0
-const val POKEMONS_MAX_COUNT = 1050
 
 @ExperimentalPagingApi
 class PagingPokemonSourceMediator(
@@ -29,7 +28,7 @@ class PagingPokemonSourceMediator(
             Log.d("PAGIN", "Load thread -> $loadType")
             // Get the closest item from PagingState that we want to load data around.
             val apiOffset = when (loadType) {
-                LoadType.REFRESH -> PAGINATION_OFFSET
+                LoadType.REFRESH -> 0
                 LoadType.PREPEND -> return MediatorResult.Success(endOfPaginationReached = true)
                 LoadType.APPEND -> {
                     // Get saved number of pokemons to use as offset

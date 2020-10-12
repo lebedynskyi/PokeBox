@@ -20,7 +20,6 @@ class RepositoryImpl(
     override fun getTopPokemonsPaged() = Pager(
         config = PagingConfig(
             pageSize = PAGINATION_LIMIT,
-            prefetchDistance = 10,
             initialLoadSize = PAGINATION_LIMIT,
             enablePlaceholders = true
         ),
