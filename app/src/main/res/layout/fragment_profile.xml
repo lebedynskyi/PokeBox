@@ -38,7 +38,8 @@
                     android:scaleType="centerInside"
                     android:src="@drawable/ic_placeholder"
                     app:layout_collapseMode="parallax"
-                    app:urlImage="@{profileItem.imageUrl}" />
+                    android:paddingBottom="10dp"
+                    app:profileImage="@{profileItem.imageUrl}" />
 
                 <com.google.android.material.appbar.MaterialToolbar
                     android:id="@+id/vessel_details_toolbar"

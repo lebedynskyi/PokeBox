@@ -13,6 +13,10 @@ class DBDataSource(
         return pokemonDatabase.pokemonDao().getTopPokemonsPaging()
     }
 
+    fun searchPokemon(query: String): PagingSource<Int, PokemonSearchInfo> {
+        return pokemonDatabase.pokemonDao().searchPokemon(query)
+    }
+
     suspend fun getTopPokemonSavedNumber(): Int {
         return pokemonDatabase.pokemonDao().getTopPokemonCount()
     }

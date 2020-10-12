@@ -3,7 +3,9 @@ package app.box.pokemon.data
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import app.box.pokemon.data.enteties.PokemonInfo
+import app.box.pokemon.data.enteties.PokemonSearchInfo
 import app.box.pokemon.data.source.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
@@ -20,8 +22,7 @@ class RepositoryImpl(
     override fun getTopPokemonsPaged() = Pager(
         config = PagingConfig(
             pageSize = PAGINATION_LIMIT,
-            initialLoadSize = PAGINATION_LIMIT,
-            enablePlaceholders = true
+            initialLoadSize = PAGINATION_LIMIT
         ),
         remoteMediator = PagingPokemonSourceMediator(
             apiDataSource,
@@ -30,6 +31,15 @@ class RepositoryImpl(
         )
     ) {
         dbDataSource.getTopPokemonsPaged()
+    }.flow
+
+    override fun searchCachedPokemon(query: String) = Pager(
+        config = PagingConfig(
+            pageSize = PAGINATION_LIMIT,
+            initialLoadSize = PAGINATION_LIMIT
+        )
+    ) {
+        dbDataSource.searchPokemon(query)
     }.flow
 
     override fun getPokemonById(id: Int): Flow<PokemonInfo?> {

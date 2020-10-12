@@ -16,6 +16,9 @@ interface PokemonDao {
     @Query("SELECT * FROM Pokemons ORDER BY id COLLATE NOCASE ASC")
     fun getTopPokemonsPaging(): PagingSource<Int, PokemonSearchInfo>
 
+    @Query("SELECT * FROM Pokemons WHERE name LIKE '%' || :query || '%' ORDER BY id COLLATE NOCASE ASC")
+    fun searchPokemon(query: String): PagingSource<Int, PokemonSearchInfo>
+
     @Query("SELECT COUNT(url) FROM Pokemons")
     suspend fun getTopPokemonCount(): Int
 

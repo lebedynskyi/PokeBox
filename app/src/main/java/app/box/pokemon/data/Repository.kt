@@ -7,5 +7,6 @@ import kotlinx.coroutines.flow.Flow
 
 interface Repository {
     fun  getTopPokemonsPaged(): Flow<PagingData<PokemonSearchInfo>>
+    fun  searchCachedPokemon(query: String): Flow<PagingData<PokemonSearchInfo>>
     fun  getPokemonById(id: Int): Flow<PokemonInfo?>
 }

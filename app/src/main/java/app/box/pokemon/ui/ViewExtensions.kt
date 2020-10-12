@@ -20,6 +20,14 @@ fun ImageView.loadImage(imageUrl: String?) {
         .into(this)
 }
 
+@BindingAdapter("profileImage")
+fun ImageView.loadProfileImage(imageUrl: String?) {
+    Glide.with(this)
+        .load(imageUrl)
+        .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
+        .into(this)
+}
+
 @BindingAdapter("pokemonTypes")
 fun TextView.setPokemonTypes(types: List<PokemonType>?) {
     this.text = TextUtils.join(", ", types.orEmpty().map { it.type.name })

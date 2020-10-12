@@ -10,4 +10,5 @@
     <string name="weight_value">%s lbs</string>
     <string name="type">Type</string>
     <string name="id">Id</string>
+    <string name="search_pokmeon">Search Pokemon</string>
 </resources>
