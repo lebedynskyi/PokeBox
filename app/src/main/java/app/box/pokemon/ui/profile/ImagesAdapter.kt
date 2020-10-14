@@ -33,7 +33,7 @@ class ImagesAdapter : RecyclerView.Adapter<ImagesAdapter.VesselPhotoHolder>() {
     class VesselPhotoHolder(view: View) : RecyclerView.ViewHolder(view) {
         fun bindPhoto(photo: String) {
             itemView.image.scaleType =
-                if (absoluteAdapterPosition == 0) ImageView.ScaleType.CENTER_INSIDE else ImageView.ScaleType.CENTER_CROP
+                if (absoluteAdapterPosition == 0) ImageView.ScaleType.CENTER_INSIDE else ImageView.ScaleType.FIT_CENTER
 
             Glide
                 .with(itemView.context)
